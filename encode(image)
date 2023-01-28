@@ -1,0 +1,56 @@
+def encode(img):
+    qc = QuantumCircuit(3) 
+    img = Image.open("Capturef2.PNG")
+    image = np.array(img)
+    if image[0][0] ==0:
+        qc.rx(np.pi,0)
+    else:
+        
+        qc.h(0)
+        qc.h(1)
+
+        qc.barrier()
+    #Pixel 1
+
+        qc.cry(theta,0,2)
+        qc.cx(0,1)
+        qc.cry(-theta,1,2)
+        qc.cx(0,1)
+        qc.cry(theta,1,2)
+
+        qc.barrier()
+#Pixel 2
+
+        qc.x(1)
+        qc.cry(theta,0,2)
+        qc.cx(0,1)
+        qc.cry(-theta,1,2)
+        qc.cx(0,1)
+        qc.cry(theta,1,2)
+  
+        qc.barrier()
+
+        qc.x(1)
+        qc.x(0)
+        qc.cry(theta,0,2)
+        qc.cx(0,1)
+        qc.cry(-theta,1,2)
+        qc.cx(0,1)
+        qc.cry(theta,1,2)
+
+
+        qc.barrier()
+
+        qc.x(1)
+   
+        qc.cry(theta,0,2)
+        qc.cx(0,1)
+        qc.cry(-theta,1,2)
+        qc.cx(0,1)
+        qc.cry(theta,1,2)
+
+        qc.measure_all()
+
+        qc.draw()
+        
+    return qc
